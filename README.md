@@ -16,7 +16,7 @@ This project involved building predictive models to identify early signs of lung
   - Applied **clustering techniques** to group patients with similar health profiles, revealing distinct high-risk cohorts.
 
 - **Data Visualization & Feature Analysis:**  
-  - Created detailed plots using **Seaborn** to visualize correlations between features such as age, smoking habits, fatigue, and chronic diseases.
+  - Created detailed plots to visualize correlations between features such as age, smoking habits, fatigue, and chronic diseases.
   - Used feature importance scores to rank the most influential predictors of lung cancer risk.
 
 ### Impact  
