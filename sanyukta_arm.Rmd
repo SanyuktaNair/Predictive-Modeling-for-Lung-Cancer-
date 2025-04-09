@@ -1,0 +1,110 @@
+---
+title: "Sanyukta ARM"
+author: "Sanyu"
+date: "2023-10-10"
+output: html_document
+---
+
+```{r}
+install.packages("lsa")
+install.packages("proxy")
+
+library(tidyverse)
+library(jsonlite)
+library(httr)
+library(ggplot2)
+library(dplyr)
+
+df<- read.csv("Cleanedcancerpatientdata.csv")
+head(df)
+```
+```{r}
+class(df$air_pollution)
+table(df$air_pollution)
+
+```
+
+```{r}
+library(arules)
+library(arulesViz)
+rule1 <- apriori(df, parameter=list(support = 0.2, confidence = 0.5)) 
+
+inspect(head(rule1,15))
+inspect(head(sort(rule1, by = "lift"),15))
+
+```
+
+```{r}
+inspect(head(rule1,15))
+inspect(head(sort(rule1, by = "support"),15))
+
+```
+```{r}
+inspect(head(rule1,15))
+inspect(head(sort(rule1, by = "confidence"),15))
+
+```
+
+
+```{r}
+plot(rule1, jitter=5)
+
+```
+```{r}
+plot(rule1, method = "grouped")
+```
+
+
+```{r}
+rule2 <- apriori(df, parameter = (list(support = 0.3, confidence = 0.5, minlen=4)))
+inspect(head(rule2, 4))
+inspect(head(sort(rule2, by = "lift"),20))
+plot(rule2, jitter=5)
+
+plot(rule2,method = "grouped")
+
+```
+
+```{r}
+rule3 <- apriori(df, parameter = (list(support = 0.4, confidence = 0.6)))
+inspect(head(rule3, 20))
+plot(rule3, jitter=5)
+
+plot(rule3,method = "grouped")
+
+
+```
+
+```{r}
+Hrules = arules::apriori(df, parameter = list(support=.25, 
+                                                   confidence=.35, minlen=3))
+#inspecting top 10 rules 
+inspect(Hrules[1:20])
+
+#sorting rules with respect to confidence , lift and support
+SortedRules_confi <- sort(Hrules, by="confidence", decreasing=TRUE)
+SortedRules_lift <- sort(Hrules, by="lift", decreasing=TRUE)
+SortedRules_supp <- sort(Hrules, by="support", decreasing=TRUE)
+
+
+inspect(SortedRules_confi[1:20])
+inspect(SortedRules_lift[1:20])
+inspect(SortedRules_supp[1:20])
+
+
+#plotting all the rules
+plot(Hrules, method = "scatterplot")
+
+#sorting rules with respect to confidence 
+SortedRules <- sort(Hrules, by="confidence", decreasing=TRUE)
+
+#inspecting top 20 rules 
+inspect(SortedRules[1:20])
+(summary(SortedRules))
+
+#plotting
+plot(SortedRules_confi[1:20], method="graph", engine="htmlwidget")
+plot(SortedRules_confi[1:20], method = "graph", asEdges = TRUE, limit = 10) 
+
+```
+
