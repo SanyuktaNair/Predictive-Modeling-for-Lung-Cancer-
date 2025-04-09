@@ -1,0 +1,56 @@
+---
+title: "Hclust"
+author: "Sanyu"
+date: "2023-10-10"
+output: html_document
+---
+
+```{r}
+#install.packages("lsa")
+#install.packages("proxy")
+
+library(tidyverse)
+library(jsonlite)
+library(httr)
+library(ggplot2)
+library(dplyr)
+
+df<- read.csv("Cleanedcancer.csv")
+head(df)
+```
+
+```{r}
+library(lsa)
+library(proxy)
+library(factoextra)
+data.labels = df$status
+table(data.labels)
+df = subset(df, select = -c(sex) )
+head(df)
+```
+```{r}
+data<- df[5:9]
+data_std<- scale(data)
+head(data)
+```
+```{r}
+write.csv(data, "hclust.csv")
+```
+
+```{r}
+plot(hc.out_data)
+rect.hclust(hc.out_data, k=3, border = 10:20)
+
+```
+
+```{r}
+plot(hc.out_data)
+rect.hclust(hc.out_data, k=4, border = 10:20)
+
+```
+```{r}
+plot(hc.out_data)
+rect.hclust(hc.out_data, k=, border = 10:20)
+
+```
+
